@@ -7,9 +7,24 @@
  * user guide available at https://docs.gradle.org/3.1/userguide/tutorial_java_projects.html
  */
 
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
+    }
+}
+
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: "com.github.johnrengelman.shadow"
+
+mainClassName = "water.JolH2O"
+applicationDefaultJvmArgs = ["-Djol.tryWithSudo=true"]
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -29,3 +44,15 @@ dependencies {
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
 }
+
+jar {
+    enabled = false
+}
+
+shadow {
+    manifest {
+        attributes 'Main-Class': 'water.JolH2O'
+    }
+}
+build.dependsOn shadowJar
+
