@@ -20,11 +20,7 @@ buildscript {
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
-apply plugin: 'application'
 apply plugin: "com.github.johnrengelman.shadow"
-
-mainClassName = "water.JolH2O"
-applicationDefaultJvmArgs = ["-Djol.tryWithSudo=true"]
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -49,7 +45,7 @@ jar {
     enabled = false
 }
 
-shadow {
+shadowJar {
     manifest {
         attributes 'Main-Class': 'water.JolH2O'
     }
